@@ -1,0 +1,83 @@
+
+/* Liquid Glass Effects - Inspired by Apple 2024 Design Language */
+
+body {
+    background: radial-gradient(ellipse at top left, #0e0e23, #151527);
+    color: #e0e6ed;
+}
+
+/* Enhanced Glass Panels */
+.profile-card, .service-card, .portfolio-item, .contact-item, .contact-form {
+    background: linear-gradient(145deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+    border: 1px solid rgba(255,255,255,0.15);
+    backdrop-filter: blur(20px) saturate(160%) brightness(120%);
+    box-shadow: 0 4px 30px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
+}
+
+/* Liquid Button Effects */
+.btn {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(145deg, rgba(100,255,218,0.4), rgba(79,195,247,0.4));
+    border: 1px solid rgba(255,255,255,0.2);
+    backdrop-filter: blur(10px);
+    color: #ffffff;
+}
+
+.btn::after {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at center, rgba(255,255,255,0.3), transparent 60%);
+    transform: translateX(-100%) rotate(45deg);
+    animation: shimmer 4s infinite linear;
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%) rotate(45deg); }
+    100% { transform: translateX(100%) rotate(45deg); }
+}
+
+/* Fluid Background Enhancement */
+.bg-animation::before {
+    background: radial-gradient(circle at center, rgba(255,255,255,0.05), transparent) repeat;
+    animation: waveMove 20s ease-in-out infinite;
+}
+
+@keyframes waveMove {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
+
+/* Section Headers */
+.section-title {
+    text-shadow: 0 0 5px rgba(100, 255, 218, 0.3);
+    position: relative;
+}
+
+.section-title::after {
+    background: linear-gradient(90deg, rgba(100,255,218,1), rgba(79,195,247,1));
+    box-shadow: 0 0 8px rgba(100,255,218,0.6);
+}
+
+/* Cursor Trail (glassy glow) */
+body::after {
+    content: "";
+    position: fixed;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(100,255,218,0.6) 0%, transparent 70%);
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    animation: floatCursor 2s infinite ease-in-out alternate;
+}
+
+@keyframes floatCursor {
+    0% { transform: translate(-50%, -50%) scale(1); }
+    100% { transform: translate(-50%, -50%) scale(1.2); }
+}
