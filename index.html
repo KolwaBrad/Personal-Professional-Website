@@ -5,48 +5,87 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bradley Duncan Junior - Portfolio</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-<link rel="stylesheet" href="liquid-glass.css">
-
     <style>
+        :root {
+            --primary-glow-color: rgba(100, 255, 218, 0.7);
+            --secondary-glow-color: rgba(79, 195, 247, 0.7);
+            --background-color-start: #0a0a14;
+            --background-color-end: #1a1a2e;
+            --text-color: #e0e6ed;
+            --text-color-muted: #b0bec5;
+            --glass-bg: rgba(26, 26, 46, 0.5);
+            --glass-border: rgba(100, 255, 218, 0.2);
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #0f0f23, #1a1a2e, #16213e);
-            color: #e0e6ed;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+            background: linear-gradient(135deg, var(--background-color-start), var(--background-color-end));
+            color: var(--text-color);
             line-height: 1.6;
             overflow-x: hidden;
         }
 
-        /* Animated Background */
-        .bg-animation {
+        /* Liquid Glass Background Animation */
+        .liquid-background {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             z-index: -2;
-            background: linear-gradient(135deg, #0f0f23, #1a1a2e, #16213e);
+            overflow: hidden;
+            filter: blur(100px);
+            opacity: 0.6;
         }
 
-        .bg-animation::before {
-            content: '';
+        .liquid-blob {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><radialGradient id="g" cx="50%" cy="50%"><stop offset="0%" style="stop-color:rgba(255,255,255,0.05)"/><stop offset="100%" style="stop-color:rgba(255,255,255,0)"/></radialGradient></defs><circle cx="20" cy="20" r="2" fill="url(%23g)"><animate attributeName="cy" values="20;80;20" dur="10s" repeatCount="indefinite"/></circle><circle cx="80" cy="40" r="1.5" fill="url(%23g)"><animate attributeName="cy" values="40;90;40" dur="8s" repeatCount="indefinite"/></circle><circle cx="40" cy="60" r="1" fill="url(%23g)"><animate attributeName="cy" values="60;10;60" dur="12s" repeatCount="indefinite"/></circle></svg>') repeat;
-            animation: float 20s ease-in-out infinite;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--primary-glow-color), var(--secondary-glow-color));
+            animation: move 30s infinite alternate ease-in-out;
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
+        .liquid-blob:nth-child(1) {
+            width: 400px;
+            height: 400px;
+            top: 10%;
+            left: 10%;
+            animation-duration: 25s;
+        }
+
+        .liquid-blob:nth-child(2) {
+            width: 300px;
+            height: 300px;
+            top: 60%;
+            left: 70%;
+            animation-duration: 35s;
+        }
+        
+        .liquid-blob:nth-child(3) {
+            width: 250px;
+            height: 250px;
+            top: 40%;
+            left: 40%;
+            animation-duration: 20s;
+        }
+
+        @keyframes move {
+            from {
+                transform: translate(-50%, -50%) rotate(0deg) scale(1);
+            }
+            to {
+                transform: translate(calc(-50% + 100px), calc(-50% - 100px)) rotate(360deg) scale(1.2);
+            }
         }
 
         /* Navigation */
@@ -54,16 +93,12 @@
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(15, 15, 35, 0.95);
-            backdrop-filter: blur(10px);
+            background: rgba(15, 15, 35, 0.8);
+            backdrop-filter: blur(20px);
             z-index: 1000;
             padding: 1rem 0;
             transition: all 0.3s ease;
-        }
-
-        nav.scrolled {
-            background: rgba(15, 15, 35, 0.98);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            border-bottom: 1px solid rgba(100, 255, 218, 0.1);
         }
 
         .nav-container {
@@ -90,40 +125,27 @@
         .nav-links {
             display: flex;
             list-style: none;
-            gap: 2rem;
+            gap: 1rem;
         }
 
         .nav-links a {
-            color: #e0e6ed;
+            color: var(--text-color);
             text-decoration: none;
             font-weight: 500;
             transition: all 0.3s ease;
             position: relative;
-        }
-
-        .nav-links a::before {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -5px;
-            left: 50%;
-            background: #64ffda;
-            transition: all 0.3s ease;
-        }
-
-        .nav-links a:hover::before {
-            width: 100%;
-            left: 0;
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
         }
 
         .nav-links a:hover {
-            color: #64ffda;
+            color: white;
+            background: rgba(100, 255, 218, 0.1);
         }
 
         .mobile-menu {
             display: none;
-            color: #e0e6ed;
+            color: var(--text-color);
             font-size: 1.5rem;
             cursor: pointer;
         }
@@ -141,51 +163,51 @@
         .hero-content {
             max-width: 800px;
             padding: 0 2rem;
+            animation: fadeIn 1.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .hero h1 {
             font-size: 4rem;
             margin-bottom: 1rem;
-            background: linear-gradient(135deg, #64ffda, #4fc3f7, #29b6f6);
+            background: linear-gradient(135deg, #64ffda, #4fc3f7, #9e8aff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            animation: fadeInUp 1s ease-out;
         }
 
         .hero .subtitle {
             font-size: 1.5rem;
             margin-bottom: 2rem;
-            color: #b0bec5;
-            animation: fadeInUp 1s ease-out 0.2s both;
+            color: var(--text-color-muted);
         }
 
         .hero .description {
             font-size: 1.2rem;
             margin-bottom: 3rem;
             color: #90a4ae;
-            animation: fadeInUp 1s ease-out 0.4s both;
         }
-
+        
         .cta-buttons {
             display: flex;
-            gap: 1rem;
+            gap: 1.5rem;
             justify-content: center;
-            flex-wrap: wrap;
-            animation: fadeInUp 1s ease-out 0.6s both;
         }
 
         .btn {
             padding: 1rem 2rem;
-            border: none;
             border-radius: 50px;
             font-size: 1rem;
             font-weight: 600;
             text-decoration: none;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
             cursor: pointer;
             position: relative;
-            overflow: hidden;
+            border: 2px solid transparent;
         }
 
         .btn-primary {
@@ -196,43 +218,18 @@
         .btn-secondary {
             background: transparent;
             color: #64ffda;
-            border: 2px solid #64ffda;
+            border-color: #64ffda;
         }
 
         .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(100, 255, 218, 0.3);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 30px rgba(100, 255, 218, 0.2);
+            border-radius: 15px; /* Liquid morph effect */
         }
 
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s ease;
-        }
-
-        .btn:hover::before {
-            left: 100%;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Sections */
+        /* General Section Styling */
         .section {
-            padding: 5rem 0;
+            padding: 5rem 2rem;
             max-width: 1200px;
             margin: 0 auto;
         }
@@ -240,7 +237,7 @@
         .section-title {
             text-align: center;
             font-size: 3rem;
-            margin-bottom: 3rem;
+            margin-bottom: 4rem;
             color: #64ffda;
             position: relative;
         }
@@ -248,105 +245,104 @@
         .section-title::after {
             content: '';
             position: absolute;
-            bottom: -10px;
+            bottom: -15px;
             left: 50%;
             transform: translateX(-50%);
-            width: 100px;
+            width: 80px;
             height: 4px;
             background: linear-gradient(135deg, #64ffda, #4fc3f7);
             border-radius: 2px;
         }
+        
+        /* Glass Card Base Style */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(25px);
+            border-radius: 25px;
+            padding: 2rem;
+            border: 1px solid var(--glass-border);
+            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            position: relative;
+            overflow: hidden;
+        }
 
+        .glass-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border-color: rgba(100, 255, 218, 0.5);
+        }
+        
+        /* Glare Effect for Cards */
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: var(--y);
+            left: var(--x);
+            transform: translate(-50%, -50%);
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1), transparent 70%);
+            opacity: 0;
+            transition: opacity 0.5s;
+            pointer-events: none;
+        }
+
+        .glass-card:hover::before {
+            opacity: 1;
+        }
+        
         /* About Section */
         .about-content {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 2fr 1fr;
             gap: 4rem;
-            padding: 0 2rem;
             align-items: center;
         }
-
-        .about-text {
-            font-size: 1.1rem;
-            color: #b0bec5;
-        }
-
+        
         .about-text p {
             margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            color: var(--text-color-muted);
         }
-
-        .about-image {
-            text-align: center;
-        }
-
-        .profile-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        .profile-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-        }
-
+        
         .profile-avatar {
-            width: 200px;
-            height: 200px;
+            width: 150px;
+            height: 150px;
             border-radius: 50%;
             background: linear-gradient(135deg, #64ffda, #4fc3f7);
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 1rem;
+            margin: 0 auto 1.5rem;
             font-size: 4rem;
             color: #0f0f23;
         }
+        
+        .profile-card { text-align: center; }
 
         /* Services Section */
         .services-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
-            padding: 0 2rem;
         }
-
-        .service-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
-            text-align: center;
-        }
-
-        .service-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(100, 255, 218, 0.1);
-            border-color: rgba(100, 255, 218, 0.3);
-        }
-
+        
         .service-icon {
             font-size: 3rem;
             color: #64ffda;
             margin-bottom: 1rem;
         }
-
+        
         .service-card h3 {
             font-size: 1.5rem;
             margin-bottom: 1rem;
-            color: #e0e6ed;
         }
-
+        
         .service-card p {
-            color: #b0bec5;
-            margin-bottom: 1rem;
+            color: var(--text-color-muted);
+            margin-bottom: 1.5rem;
         }
-
+        
         .service-skills {
             display: flex;
             flex-wrap: wrap;
@@ -357,10 +353,9 @@
         .skill-tag {
             background: rgba(100, 255, 218, 0.1);
             color: #64ffda;
-            padding: 0.3rem 0.8rem;
+            padding: 0.5rem 1rem;
             border-radius: 20px;
             font-size: 0.9rem;
-            border: 1px solid rgba(100, 255, 218, 0.3);
         }
 
         /* Portfolio Section */
@@ -368,150 +363,109 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 2rem;
-            padding: 0 2rem;
-        }
-
-        .portfolio-item {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        .portfolio-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(100, 255, 218, 0.1);
         }
 
         .portfolio-item h3 {
             color: #64ffda;
             margin-bottom: 1rem;
-            font-size: 1.3rem;
         }
 
         .portfolio-item p {
-            color: #b0bec5;
+            color: var(--text-color-muted);
             margin-bottom: 1rem;
         }
-
+        
         .portfolio-tech {
             display: flex;
             flex-wrap: wrap;
             gap: 0.5rem;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
         }
-
+        
         .tech-tag {
-            background: rgba(79, 195, 247, 0.1);
+            background: rgba(79, 195, 247, 0.15);
             color: #4fc3f7;
-            padding: 0.3rem 0.8rem;
+            padding: 0.4rem 0.8rem;
             border-radius: 15px;
             font-size: 0.8rem;
-            border: 1px solid rgba(79, 195, 247, 0.3);
         }
 
         /* Contact Section */
         .contact-content {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr 1.5fr;
             gap: 4rem;
-            padding: 0 2rem;
         }
-
-        .contact-info {
-            space-y: 2rem;
-        }
-
+        
         .contact-item {
             display: flex;
             align-items: center;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             padding: 1rem;
-            background: rgba(255, 255, 255, 0.05);
             border-radius: 15px;
             transition: all 0.3s ease;
         }
 
         .contact-item:hover {
-            background: rgba(255, 255, 255, 0.1);
+            background: var(--glass-bg);
             transform: translateX(10px);
         }
-
+        
         .contact-item i {
             font-size: 1.5rem;
             color: #64ffda;
-            margin-right: 1rem;
+            margin-right: 1.5rem;
             width: 30px;
         }
-
+        
         .contact-item a {
-            color: #e0e6ed;
+            color: var(--text-color);
             text-decoration: none;
             transition: color 0.3s ease;
         }
-
-        .contact-item a:hover {
-            color: #64ffda;
-        }
-
-        .contact-form {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
+        
+        .contact-item a:hover { color: #64ffda; }
+        
+        .form-group { margin-bottom: 1.5rem; }
+        
         .form-group label {
             display: block;
             margin-bottom: 0.5rem;
-            color: #e0e6ed;
             font-weight: 500;
         }
-
-        .form-group input,
-        .form-group textarea {
+        
+        .form-group input, .form-group textarea {
             width: 100%;
             padding: 1rem;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
             border-radius: 10px;
-            color: #e0e6ed;
+            color: var(--text-color);
             font-size: 1rem;
             transition: all 0.3s ease;
         }
 
-        .form-group input:focus,
-        .form-group textarea:focus {
+        .form-group input:focus, .form-group textarea:focus {
             outline: none;
             border-color: #64ffda;
-            box-shadow: 0 0 10px rgba(100, 255, 218, 0.3);
+            box-shadow: 0 0 15px rgba(100, 255, 218, 0.3);
         }
-
-        .form-group textarea {
-            resize: vertical;
-            min-height: 120px;
-        }
+        
+        .form-group textarea { resize: vertical; min-height: 120px; }
 
         /* Footer */
         footer {
-            background: rgba(15, 15, 35, 0.9);
             text-align: center;
-            padding: 2rem 0;
+            padding: 3rem 2rem;
             margin-top: 3rem;
+            border-top: 1px solid var(--glass-border);
         }
 
         .social-links {
             display: flex;
             justify-content: center;
-            gap: 1rem;
-            margin-bottom: 1rem;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
         }
 
         .social-links a {
@@ -532,62 +486,36 @@
             background: #64ffda;
             color: #0f0f23;
             transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(100, 255, 218, 0.2);
         }
+        
+        footer p { color: var(--text-color-muted); }
 
         /* Responsive Design */
+        @media (max-width: 992px) {
+            .about-content, .contact-content {
+                grid-template-columns: 1fr;
+            }
+        }
+        
         @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-
-            .mobile-menu {
-                display: block;
-            }
-
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero .subtitle {
-                font-size: 1.2rem;
-            }
-
-            .cta-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .about-content,
-            .contact-content {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
-            .section-title {
-                font-size: 2rem;
-            }
-
-            .services-grid,
-            .portfolio-grid {
-                grid-template-columns: 1fr;
-            }
+            .nav-links { display: none; /* Simplified for example */ }
+            .mobile-menu { display: block; }
+            .hero h1 { font-size: 2.8rem; }
+            .hero .subtitle { font-size: 1.2rem; }
+            .cta-buttons { flex-direction: column; align-items: center; }
+            .section-title { font-size: 2.2rem; }
         }
 
         /* Scroll animations */
         .fade-in {
             opacity: 0;
             transform: translateY(30px);
-            transition: all 0.6s ease;
+            transition: all 1s cubic-bezier(0.25, 1, 0.5, 1);
         }
-
         .fade-in.visible {
             opacity: 1;
             transform: translateY(0);
-        }
-
-        /* Smooth scrolling */
-        html {
-            scroll-behavior: smooth;
         }
 
         /* Loading animation */
@@ -620,21 +548,21 @@
         }
 
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            to { transform: rotate(360deg); }
         }
     </style>
 </head>
 <body>
-    <!-- Loading Screen -->
     <div class="loading" id="loading">
         <div class="spinner"></div>
     </div>
 
-    <!-- Background Animation -->
-    <div class="bg-animation"></div>
+    <div class="liquid-background">
+        <div class="liquid-blob"></div>
+        <div class="liquid-blob"></div>
+        <div class="liquid-blob"></div>
+    </div>
 
-    <!-- Navigation -->
     <nav id="navbar">
         <div class="nav-container">
             <a href="#home" class="logo">BDJ</a>
@@ -651,7 +579,6 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
     <section id="home" class="hero">
         <div class="hero-content">
             <h1>Bradley Duncan Junior</h1>
@@ -664,321 +591,170 @@
         </div>
     </section>
 
-    <!-- About Section -->
     <section id="about" class="section fade-in">
         <h2 class="section-title">About Me</h2>
         <div class="about-content">
             <div class="about-text">
                 <p>I'm a passionate software developer and media content creator and editor. With a strong foundation in both technical development and creative media production, I bring a unique blend of analytical thinking and artistic vision to every project.</p>
-                
                 <p>My journey spans from developing secure web applications and AI-powered systems to creating compelling visual content for brands. I thrive on challenges that require both technical expertise and creative problem-solving.</p>
-                
                 <p>Currently serving as a Media Content Creator at Cotis Safaris, I posses invaluable experience in managing end-to-end content production while building my skills in software development through various projects and even working at ABSA Bank Kenya.</p>
             </div>
-            <div class="about-image">
-                <div class="profile-card">
-                    <div class="profile-avatar">
-                        <i class="fas fa-user"></i>
-                    </div>
-                    <h3>Bradley Duncan Junior</h3>
-                    <p>Based in Nairobi, Kenya</p>
-                    <p>Software and Design Solutions</p>
-                    <p>Media Content Creation and Editing</p>
+            <div class="profile-card glass-card">
+                <div class="profile-avatar">
+                    <i class="fas fa-user"></i>
                 </div>
+                <h3>Bradley Duncan Junior</h3>
+                <p>Based in Nairobi, Kenya</p>
+                <p>Software and Design Solutions</p>
+                <p>Media Content Creation and Editing</p>
             </div>
         </div>
     </section>
 
-    <!-- Services Section -->
     <section id="services" class="section fade-in">
         <h2 class="section-title">My Services</h2>
         <div class="services-grid">
-            <div class="service-card">
-                <div class="service-icon">
-                    <i class="fas fa-code"></i>
-                </div>
+            <div class="service-card glass-card">
+                <div class="service-icon"><i class="fas fa-code"></i></div>
                 <h3>Software & Web Development</h3>
                 <p>Full-stack development solutions using modern frameworks and technologies. From concept to deployment, I create robust and scalable applications.</p>
                 <div class="service-skills">
-                    <span class="skill-tag">Python</span>
-                    <span class="skill-tag">PHP</span>
-                    <span class="skill-tag">HTML/CSS</span>
-                    <span class="skill-tag">JavaScript</span>
-                    <span class="skill-tag">Laravel</span>
-                    <span class="skill-tag">Django</span>
-                    <span class="skill-tag">Flask</span>
+                    <span class="skill-tag">Python</span> <span class="skill-tag">PHP</span> <span class="skill-tag">HTML/CSS</span> <span class="skill-tag">JavaScript</span> <span class="skill-tag">Laravel</span> <span class="skill-tag">Django</span> <span class="skill-tag">Flask</span>
                 </div>
             </div>
-
-            <div class="service-card">
-                <div class="service-icon">
-                    <i class="fas fa-palette"></i>
-                </div>
+            <div class="service-card glass-card">
+                <div class="service-icon"><i class="fas fa-palette"></i></div>
                 <h3>UI/UX Design</h3>
                 <p>Creating intuitive and visually appealing user interfaces that provide exceptional user experiences across all devices and platforms.</p>
                 <div class="service-skills">
-                    <span class="skill-tag">Figma</span>
-                    <span class="skill-tag">Adobe XD</span>
-                    <span class="skill-tag">Photoshop</span>
-                    <span class="skill-tag">User Research</span>
-                    <span class="skill-tag">Prototyping</span>
+                    <span class="skill-tag">Figma</span> <span class="skill-tag">Adobe XD</span> <span class="skill-tag">Photoshop</span> <span class="skill-tag">User Research</span> <span class="skill-tag">Prototyping</span>
                 </div>
             </div>
-
-            <div class="service-card">
-                <div class="service-icon">
-                    <i class="fas fa-video"></i>
-                </div>
+            <div class="service-card glass-card">
+                <div class="service-icon"><i class="fas fa-video"></i></div>
                 <h3>Media Content Creation</h3>
                 <p>Professional videography, photography, and content creation services for brands, social media, and marketing campaigns.</p>
                 <div class="service-skills">
-                    <span class="skill-tag">Premiere Pro</span>
-                    <span class="skill-tag">CapCut</span>
-                    <span class="skill-tag">Filmora</span>
-                    <span class="skill-tag">Photography</span>
-                    <span class="skill-tag">Video Editing</span>
+                    <span class="skill-tag">Premiere Pro</span> <span class="skill-tag">CapCut</span> <span class="skill-tag">Filmora</span> <span class="skill-tag">Photography</span> <span class="skill-tag">Video Editing</span>
                 </div>
             </div>
-
-            <div class="service-card">
-                <div class="service-icon">
-                    <i class="fas fa-mobile-alt"></i>
-                </div>
+            <div class="service-card glass-card">
+                <div class="service-icon"><i class="fas fa-mobile-alt"></i></div>
                 <h3>Mobile Development</h3>
                 <p>Native and cross-platform mobile applications that deliver seamless experiences on both iOS and Android devices.</p>
                 <div class="service-skills">
-                    <span class="skill-tag">Kotlin</span>
-                    <span class="skill-tag">Android Studio</span>
-                    <span class="skill-tag">Mobile UI</span>
-                    <span class="skill-tag">App Design</span>
+                    <span class="skill-tag">Kotlin</span> <span class="skill-tag">Android Studio</span> <span class="skill-tag">Mobile UI</span> <span class="skill-tag">App Design</span>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Portfolio Section -->
-    <section id="portfolio" class="section fade-in">
-        <h2 class="section-title">Featured Projects</h2>
-        <div class="portfolio-grid">
-            <div class="portfolio-item">
-                <h3>Residential Relocation Recommendation System</h3>
-                <p>An AI-powered system that helps users find suitable neighborhoods based on budget and house specifications, leveraging real-time Google Maps data and latest area news for comprehensive recommendations.</p>
-                <div class="portfolio-tech">
-                    <span class="tech-tag">AI/ML</span>
-                    <span class="tech-tag">Google Maps API</span>
-                    <span class="tech-tag">Real-time Data</span>
-                    <span class="tech-tag">Full Stack</span>
-                </div>
-                <p><strong>Role:</strong> Sole Full Stack Developer</p>
-                <p><strong>Duration:</strong> September 2024 - January 2025</p>
+<section id="portfolio" class="section fade-in">
+    <h2 class="section-title">Featured Projects</h2>
+    <div class="portfolio-grid">
+        <!-- Existing Projects -->
+        <div class="portfolio-item glass-card">
+            <h3>Residential Relocation Recommendation System</h3>
+            <p>An AI-powered system that helps users find suitable neighborhoods based on budget and house specifications, leveraging real-time Google Maps data.</p>
+            <div class="portfolio-tech">
+                <span class="tech-tag">AI/ML</span> <span class="tech-tag">Google Maps API</span> <span class="tech-tag">Full Stack</span>
             </div>
-
-            <div class="portfolio-item">
-                <h3>Media Content Portfolio</h3>
-                <p>A comprehensive collection of branded content including commercials for major brands like Coke, Bic Pen, and Nescafe, alongside lifestyle projects and advanced color grading samples.</p>
-                <div class="portfolio-tech">
-                    <span class="tech-tag">Video Production</span>
-                    <span class="tech-tag">Color Grading</span>
-                    <span class="tech-tag">Brand Content</span>
-                    <span class="tech-tag">Social Media</span>
-                </div>
-                <p><strong>Portfolio:</strong> <a href="https://drive.google.com/drive/folders/1wkx-b2EPhoiJtTX0chzUOz9ebzlllHYA?usp=sharing" target="_blank" style="color: #64ffda;">View Video Portfolio</a></p>
-            </div>
-
-            <div class="portfolio-item">
-                <h3>Kenya Rental Recommender</h3>
-                <p>A smart rental recommendation system designed specifically for the Kenyan market, helping users find suitable rental properties based on their preferences and budget constraints.</p>
-                <div class="portfolio-tech">
-                    <span class="tech-tag">HTML</span>
-                    <span class="tech-tag">Recommendation Engine</span>
-                    <span class="tech-tag">Data Analysis</span>
-                    <span class="tech-tag">Local Market</span>
-                </div>
-                <p><strong>Status:</strong> Public Repository</p>
-                <p><strong>Last Updated:</strong> January 2025</p>
-            </div>
-
-            <div class="portfolio-item">
-                <h3>Land Transaction Platform</h3>
-                <p>A secure web application platform enabling safer land transactions through a dual transaction system that hashes every transaction on title deeds to ensure ownership certainty and secure transfers.</p>
-                <div class="portfolio-tech">
-                    <span class="tech-tag">Blockchain</span>
-                    <span class="tech-tag">Security</span>
-                    <span class="tech-tag">Web Development</span>
-                    <span class="tech-tag">Cryptography</span>
-                </div>
-                <p><strong>Role:</strong> Co-Developer</p>
-                <p><strong>Duration:</strong> June 2023 - July 2023</p>
-            </div>
-
-            <div class="portfolio-item">
-                <h3>Spotify Wrapped Flask App</h3>
-                <p>A Flask-based web application that allows Spotify users to view their personalized Spotify Wrapped. Integrates with Spotify API to fetch user data and displays it in a visually appealing UI with animations.</p>
-                <div class="portfolio-tech">
-                    <span class="tech-tag">Flask</span>
-                    <span class="tech-tag">Spotify API</span>
-                    <span class="tech-tag">HTML/CSS</span>
-                    <span class="tech-tag">Python</span>
-                </div>
-                <p><strong>Status:</strong> Public Repository</p>
-                <p><strong>Last Updated:</strong> February 2025</p>
-            </div>
-
-            <div class="portfolio-item">
-                <h3>Snake-Xenzia Game</h3>
-                <p>A modern take on the classic Snake Xenzia game, built with Python Flask backend and HTML/CSS/JavaScript frontend. Features smooth animations, sound effects, and a glowing retro aesthetic.</p>
-                <div class="portfolio-tech">
-                    <span class="tech-tag">JavaScript</span>
-                    <span class="tech-tag">Flask</span>
-                    <span class="tech-tag">Game Development</span>
-                    <span class="tech-tag">Retro Design</span>
-                </div>
-                <p><strong>Status:</strong> Public Repository</p>
-                <p><strong>Last Updated:</strong> April 2024</p>
-            </div>
-
-            <div class="portfolio-item">
-                <h3>NBA Predictor</h3>
-                <p>A machine learning application that predicts NBA match outcomes, team performance, and player statistics using historical data and advanced analytics algorithms.</p>
-                <div class="portfolio-tech">
-                    <span class="tech-tag">HTML</span>
-                    <span class="tech-tag">Machine Learning</span>
-                    <span class="tech-tag">Sports Analytics</span>
-                    <span class="tech-tag">Data Science</span>
-                </div>
-                <p><strong>Status:</strong> Public Repository</p>
-                <p><strong>Last Updated:</strong> February 2024</p>
-            </div>
-
-            <div class="portfolio-item">
-                <h3>YouTube to Spotify Converter</h3>
-                <p>A Python program that seamlessly converts YouTube playlists to Spotify playlists, automating the process of transferring music collections between platforms.</p>
-                <div class="portfolio-tech">
-                    <span class="tech-tag">Python</span>
-                    <span class="tech-tag">YouTube API</span>
-                    <span class="tech-tag">Spotify API</span>
-                    <span class="tech-tag">Automation</span>
-                </div>
-                <p><strong>Status:</strong> Public Repository</p>
-                <p><strong>Last Updated:</strong> March 2024</p>
-            </div>
-
-            <div class="portfolio-item">
-                <h3>Resume Cover Letter Assistant</h3>
-                <p>An intelligent web application that helps users create professional resumes and cover letters with customizable templates and AI-powered content suggestions.</p>
-                <div class="portfolio-tech">
-                    <span class="tech-tag">HTML</span>
-                    <span class="tech-tag">Web Development</span>
-                    <span class="tech-tag">Document Generation</span>
-                    <span class="tech-tag">UI/UX</span>
-                </div>
-                <p><strong>Status:</strong> Public Repository</p>
-                <p><strong>Last Updated:</strong> February 2024</p>
-            </div>
-
-            
+            <p><strong>Role:</strong> Sole Full Stack Developer</p>
         </div>
-    </section>
+        <div class="portfolio-item glass-card">
+            <h3>Media Content Portfolio</h3>
+            <p>A comprehensive collection of branded content including commercials for major brands like Coke, Bic Pen, and Nescafe, alongside lifestyle projects.</p>
+            <div class="portfolio-tech">
+                <span class="tech-tag">Video Production</span> <span class="tech-tag">Color Grading</span> <span class="tech-tag">Brand Content</span>
+            </div>
+            <p><strong>Portfolio:</strong> <a href="https://drive.google.com/drive/folders/1wkx-b2EPhoiJtTX0chzUOz9ebzlllHYA?usp=sharing" target="_blank" style="color: #64ffda;">View Video Portfolio</a></p>
+        </div>
+        <div class="portfolio-item glass-card">
+            <h3>Land Transaction Platform</h3>
+            <p>A secure web application platform enabling safer land transactions through a dual transaction system that hashes every transaction on title deeds.</p>
+            <div class="portfolio-tech">
+                <span class="tech-tag">Blockchain</span> <span class="tech-tag">Security</span> <span class="tech-tag">Web Development</span>
+            </div>
+            <p><strong>Role:</strong> Co-Developer</p>
+        </div>
+        <div class="portfolio-item glass-card">
+            <h3>Spotify Wrapped App</h3>
+            <p>A Flask-based web application that allows Spotify users to view their personalized Spotify Wrapped. Integrates with Spotify API to fetch user data.</p>
+            <div class="portfolio-tech">
+                <span class="tech-tag">Flask</span> <span class="tech-tag">Spotify API</span> <span class="tech-tag">Python</span>
+            </div>
+            <p><strong>Status:</strong> Public Repository</p>
+        </div>
 
-    <!-- Contact Section -->
+        <!-- Newly Formatted Projects -->
+        <div class="portfolio-item glass-card">
+            <h3>Snake-Xenzia Game</h3>
+            <p>A modern take on the classic Snake Xenzia game, built with Python Flask backend and HTML/CSS/JavaScript frontend. Features smooth animations, sound effects, and a glowing retro aesthetic.</p>
+            <div class="portfolio-tech">
+                <span class="tech-tag">JavaScript</span> <span class="tech-tag">Flask</span> <span class="tech-tag">Game Development</span> <span class="tech-tag">Retro Design</span>
+            </div>
+            <p><strong>Status:</strong> Public Repository</p>
+            <p><strong>Last Updated:</strong> April 2024</p>
+        </div>
+        <div class="portfolio-item glass-card">
+            <h3>NBA Predictor</h3>
+            <p>A machine learning application that predicts NBA match outcomes, team performance, and player statistics using historical data and advanced analytics algorithms.</p>
+            <div class="portfolio-tech">
+                <span class="tech-tag">HTML</span> <span class="tech-tag">Machine Learning</span> <span class="tech-tag">Sports Analytics</span> <span class="tech-tag">Data Science</span>
+            </div>
+            <p><strong>Status:</strong> Public Repository</p>
+            <p><strong>Last Updated:</strong> February 2024</p>
+        </div>
+        <div class="portfolio-item glass-card">
+            <h3>YouTube to Spotify Converter</h3>
+            <p>A Python program that seamlessly converts YouTube playlists to Spotify playlists, automating the process of transferring music collections between platforms.</p>
+            <div class="portfolio-tech">
+                <span class="tech-tag">Python</span> <span class="tech-tag">YouTube API</span> <span class="tech-tag">Spotify API</span> <span class="tech-tag">Automation</span>
+            </div>
+            <p><strong>Status:</strong> Public Repository</p>
+            <p><strong>Last Updated:</strong> March 2024</p>
+        </div>
+        <div class="portfolio-item glass-card">
+            <h3>Resume Cover Letter Assistant</h3>
+            <p>An intelligent web application that helps users create professional resumes and cover letters with customizable templates and AI-powered content suggestions.</p>
+            <div class="portfolio-tech">
+                <span class="tech-tag">HTML</span> <span class="tech-tag">Web Development</span> <span class="tech-tag">Document Generation</span> <span class="tech-tag">UI/UX</span>
+            </div>
+            <p><strong>Status:</strong> Public Repository</p>
+            <p><strong>Last Updated:</strong> February 2024</p>
+        </div>
+    </div>
+</section>
+
+
     <section id="contact" class="section fade-in">
         <h2 class="section-title">Get In Touch</h2>
         <div class="contact-content">
             <div class="contact-info">
-                <div class="contact-item">
-                    <i class="fas fa-envelope"></i>
-                    <div>
-                        <h4>Email</h4>
-                        <a href="mailto:bradleyduncanjr@gmail.com">bradleyduncanjr@gmail.com</a>
-                    </div>
-                </div>
-
-                <div class="contact-item">
-                    <i class="fas fa-phone"></i>
-                    <div>
-                        <h4>Phone</h4>
-                        <a href="tel:+254741307814">+254-741-307-814</a>
-                    </div>
-                </div>
-
-                <div class="contact-item">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <div>
-                        <h4>Location</h4>
-                        <span>Nairobi, Kenya</span>
-                    </div>
-                </div>
-
-                <div class="contact-item">
-                    <i class="fab fa-linkedin"></i>
-                    <div>
-                        <h4>LinkedIn</h4>
-                        <a href="https://www.linkedin.com/in/bradley-junior-3a7ab2231/" target="_blank">Connect with me</a>
-                    </div>
-                </div>
-
-                <div class="contact-item">
-                    <i class="fab fa-instagram"></i>
-                    <div>
-                        <h4>Instagram</h4>
-                        <a href="https://www.instagram.com/kolwarld/" target="_blank">@kolwarld</a>
-                    </div>
-                </div>
-
-                <div class="contact-item">
-                    <i class="fab fa-tiktok"></i>
-                    <div>
-                        <h4>TikTok</h4>
-                        <a href="https://www.tiktok.com/@kolwarld?lang=en" target="_blank">@kolwarld</a>
-                    </div>
-                </div>
+                <div class="contact-item"><i class="fas fa-envelope"></i><div><h4>Email</h4><a href="mailto:bradleyduncanjr@gmail.com">bradleyduncanjr@gmail.com</a></div></div>
+                <div class="contact-item"><i class="fas fa-phone"></i><div><h4>Phone</h4><a href="tel:+254741307814">+254-741-307-814</a></div></div>
+                <div class="contact-item"><i class="fas fa-map-marker-alt"></i><div><h4>Location</h4><span>Nairobi, Kenya</span></div></div>
+                <div class="contact-item"><i class="fab fa-linkedin"></i><div><h4>LinkedIn</h4><a href="https://www.linkedin.com/in/bradley-junior-3a7ab2231/" target="_blank">Connect with me</a></div></div>
             </div>
-
-            <div class="contact-form">
-                <h3>Send Message</h3>
+            <div class="contact-form-wrapper glass-card">
+                <h3>Send a Message</h3>
                 <form id="contactForm">
-                    <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" id="name" name="name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="subject">Subject</label>
-                        <input type="text" id="subject" name="subject" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="message">Message</label>
-                        <textarea id="message" name="message" placeholder="Tell me about your project..." required></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary" style="width: 100%;">
-                        <i class="fas fa-paper-plane"></i> Send Message
-                    </button>
+                    <div class="form-group"><label for="name">Name</label><input type="text" id="name" name="name" required></div>
+                    <div class="form-group"><label for="email">Email</label><input type="email" id="email" name="email" required></div>
+                    <div class="form-group"><label for="subject">Subject</label><input type="text" id="subject" name="subject" required></div>
+                    <div class="form-group"><label for="message">Message</label><textarea id="message" name="message" placeholder="Tell me about your project..." required></textarea></div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;"><i class="fas fa-paper-plane"></i> Send Message</button>
                 </form>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
     <footer>
         <div class="social-links">
-            <a href="https://www.linkedin.com/in/bradley-junior-3a7ab2231/" target="_blank" title="LinkedIn">
-                <i class="fab fa-linkedin-in"></i>
-            </a>
-            <a href="https://www.instagram.com/kolwarld/" target="_blank" title="Instagram">
-                <i class="fab fa-instagram"></i>
-            </a>
-            <a href="https://www.tiktok.com/@kolwarld?lang=en" target="_blank" title="TikTok">
-                <i class="fab fa-tiktok"></i>
-            </a>
-            <a href="mailto:bradleyduncanjr@gmail.com" title="Email">
-                <i class="fas fa-envelope"></i>
-            </a>
-            <a href="https://drive.google.com/drive/folders/1wkx-b2EPhoiJtTX0chzUOz9ebzlllHYA?usp=sharing" target="_blank" title="Portfolio">
-                <i class="fas fa-folder-open"></i>
-            </a>
+            <a href="https://www.linkedin.com/in/bradley-junior-3a7ab2231/" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            <a href="https://www.instagram.com/kolwarld/" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.tiktok.com/@kolwarld?lang=en" target="_blank" title="TikTok"><i class="fab fa-tiktok"></i></a>
+            <a href="mailto:bradleyduncanjr@gmail.com" title="Email"><i class="fas fa-envelope"></i></a>
         </div>
         <p>&copy; 2025 Bradley Duncan Junior. All rights reserved.</p>
         <p>Crafted with passion in Nairobi, Kenya 🇰🇪</p>
@@ -987,267 +763,49 @@
     <script>
         // Loading Screen
         window.addEventListener('load', function() {
-            const loading = document.getElementById('loading');
-            setTimeout(() => {
-                loading.classList.add('hidden');
-            }, 1000);
+            document.getElementById('loading').classList.add('hidden');
         });
 
         // Navbar Scroll Effect
         window.addEventListener('scroll', function() {
             const navbar = document.getElementById('navbar');
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-        });
-
-        // Mobile Menu Toggle
-        const mobileMenu = document.getElementById('mobile-menu');
-        const navLinks = document.querySelector('.nav-links');
-
-        mobileMenu.addEventListener('click', function() {
-            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
-            navLinks.style.position = 'absolute';
-            navLinks.style.top = '100%';
-            navLinks.style.left = '0';
-            navLinks.style.width = '100%';
-            navLinks.style.background = 'rgba(15, 15, 35, 0.98)';
-            navLinks.style.flexDirection = 'column';
-            navLinks.style.padding = '1rem';
-            navLinks.style.borderRadius = '0 0 10px 10px';
-        });
-
-        // Smooth Scrolling for Navigation Links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-                // Close mobile menu if open
-                if (window.innerWidth <= 768) {
-                    navLinks.style.display = 'none';
-                }
-            });
+            navbar.classList.toggle('scrolled', window.scrollY > 50);
         });
 
         // Intersection Observer for Fade-in Animation
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver(function(entries) {
+        const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
                 }
             });
-        }, observerOptions);
+        }, { threshold: 0.1 });
 
-        // Observe all fade-in elements
-        document.querySelectorAll('.fade-in').forEach(el => {
-            observer.observe(el);
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // Glass Card Glare Effect
+        document.querySelectorAll('.glass-card').forEach(card => {
+            card.addEventListener('mousemove', e => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--x', `${x}px`);
+                card.style.setProperty('--y', `${y}px`);
+            });
         });
 
-        // Contact Form Handling
+        // Contact Form Handling (mailto)
         document.getElementById('contactForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            
-            // Get form data
             const formData = new FormData(this);
             const name = formData.get('name');
             const email = formData.get('email');
             const subject = formData.get('subject');
             const message = formData.get('message');
-            
-            // Create mailto link
             const mailtoLink = `mailto:bradleyduncanjr@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`)}`;
-            
-            // Open email client
             window.location.href = mailtoLink;
-            
-            // Show success message
-            const button = this.querySelector('button[type="submit"]');
-            const originalText = button.innerHTML;
-            button.innerHTML = '<i class="fas fa-check"></i> Message Sent!';
-            button.style.background = 'linear-gradient(135deg, #4caf50, #45a049)';
-            
-            setTimeout(() => {
-                button.innerHTML = originalText;
-                button.style.background = 'linear-gradient(135deg, #64ffda, #4fc3f7)';
-                this.reset();
-            }, 3000);
         });
 
-        // Typing Animation for Hero Section
-        function typeWriter(element, text, speed = 100) {
-            let i = 0;
-            element.innerHTML = '';
-            
-            function type() {
-                if (i < text.length) {
-                    element.innerHTML += text.charAt(i);
-                    i++;
-                    setTimeout(type, speed);
-                }
-            }
-            type();
-        }
-
-        // Initialize typing animation when page loads
-        window.addEventListener('load', function() {
-            setTimeout(() => {
-                const subtitle = document.querySelector('.hero .subtitle');
-                const originalText = subtitle.textContent;
-                typeWriter(subtitle, originalText, 80);
-            }, 1500);
-        });
-
-        // Parallax Effect for Hero Section
-        window.addEventListener('scroll', function() {
-            const scrolled = window.pageYOffset;
-            const hero = document.querySelector('.hero-content');
-            const rate = scrolled * -0.5;
-            
-            if (hero) {
-                hero.style.transform = `translateY(${rate}px)`;
-            }
-        });
-
-        // Add hover effect to service cards
-        document.querySelectorAll('.service-card').forEach(card => {
-            card.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-10px) scale(1.02)';
-            });
-            
-            card.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(-10px) scale(1)';
-            });
-        });
-
-        // Add click animation to buttons
-        document.querySelectorAll('.btn').forEach(button => {
-            button.addEventListener('click', function(e) {
-                const ripple = document.createElement('span');
-                const rect = this.getBoundingClientRect();
-                const size = Math.max(rect.width, rect.height);
-                const x = e.clientX - rect.left - size / 2;
-                const y = e.clientY - rect.top - size / 2;
-                
-                ripple.style.cssText = `
-                    position: absolute;
-                    width: ${size}px;
-                    height: ${size}px;
-                    left: ${x}px;
-                    top: ${y}px;
-                    background: rgba(255, 255, 255, 0.3);
-                    border-radius: 50%;
-                    transform: scale(0);
-                    animation: ripple 0.6s ease-out;
-                    pointer-events: none;
-                `;
-                
-                this.appendChild(ripple);
-                
-                setTimeout(() => {
-                    ripple.remove();
-                }, 600);
-            });
-        });
-
-        // Add ripple animation
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes ripple {
-                to {
-                    transform: scale(2);
-                    opacity: 0;
-                }
-            }
-        `;
-        document.head.appendChild(style);
-
-        // Cursor Trail Effect
-        let mouseX = 0;
-        let mouseY = 0;
-        let trailElements = [];
-
-        function createTrailElement() {
-            const trail = document.createElement('div');
-            trail.style.cssText = `
-                position: fixed;
-                width: 10px;
-                height: 10px;
-                background: radial-gradient(circle, rgba(100,255,218,0.6) 0%, transparent 70%);
-                border-radius: 50%;
-                pointer-events: none;
-                z-index: 9999;
-                transition: all 0.3s ease;
-            `;
-            document.body.appendChild(trail);
-            return trail;
-        }
-
-        // Create trail elements
-        for (let i = 0; i < 5; i++) {
-            trailElements.push(createTrailElement());
-        }
-
-        document.addEventListener('mousemove', function(e) {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-        });
-
-        function animateTrail() {
-            let x = mouseX;
-            let y = mouseY;
-            
-            trailElements.forEach((trail, index) => {
-                trail.style.left = x - 5 + 'px';
-                trail.style.top = y - 5 + 'px';
-                trail.style.opacity = (5 - index) / 5;
-                trail.style.transform = `scale(${(5 - index) / 5})`;
-                
-                x += (mouseX - x) * 0.1;
-                y += (mouseY - y) * 0.1;
-            });
-            
-            requestAnimationFrame(animateTrail);
-        }
-
-        animateTrail();
-
-        // Skills Animation on Scroll
-        function animateSkills() {
-            const skillTags = document.querySelectorAll('.skill-tag, .tech-tag');
-            skillTags.forEach((tag, index) => {
-                setTimeout(() => {
-                    tag.style.animation = 'fadeInUp 0.6s ease forwards';
-                }, index * 100);
-            });
-        }
-
-        // Trigger skills animation when services section is visible
-        const servicesObserver = new IntersectionObserver(function(entries) {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    animateSkills();
-                    servicesObserver.unobserve(entry.target);
-                }
-            });
-        });
-
-        const servicesSection = document.getElementById('services');
-        if (servicesSection) {
-            servicesObserver.observe(servicesSection);
-        }
     </script>
 </body>
 </html>
